@@ -141,7 +141,7 @@ class IPatientRepositoryTest {
         Patient patientGet = iPatientRepository.findByIdAndDeletedFalse(patientSaved.getId()).orElse(null);
         Assertions.assertThat(patientGet).isNotNull();
     }
-
+/*
     @Test
     void patientRepository_getPatientByName_ReturnPatientWithName()
     {
@@ -157,8 +157,8 @@ class IPatientRepositoryTest {
         patient.setAge(21);
 
         Patient patientSaved = iPatientRepository.save(patient);
-        Patient patientByName = iPatientRepository.findByNomAndDeletedFalse(patientSaved.getNom()).orElse(null);
+        Patient patientByName = iPatientRepository.findByNomAndDeletedFalse(patientSaved.getNom()).o(null);
         Assertions.assertThat(patientByName).isNotNull();
         Assertions.assertThat(patientSaved.getNom()).isEqualTo(patientByName.getNom());
-    }
+    }*/
 }

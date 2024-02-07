@@ -15,15 +15,15 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class MaterialDto implements Serializable {
-    Long id;
+    @Builder
+    public class MaterialDto implements Serializable {
+        Long id;
 
-    @NotNull
-    String libelle;
+        @NotNull
+        String libelle;
 
-    @Min(1)
-    int availableQuantity;
+        @Min(1)
+        int availableQuantity;
 
     @Min(1)
     double price;
