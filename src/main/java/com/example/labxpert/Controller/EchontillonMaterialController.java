@@ -6,6 +6,7 @@ import com.example.labxpert.Service.IEchontillonMaterialService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,12 +21,14 @@ public class EchontillonMaterialController {
     private final IEchontillonMaterialService iEchontillonMaterialService;
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<List<EchontillonMaterialDto>> getAll()
     {
         return ResponseEntity.ok(iEchontillonMaterialService.getAll());
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
     public ResponseEntity<EchontillonMaterialDto> save(@RequestBody @Valid EchontillonMaterialDto echontillonMaterialDto)
     {
         EchontillonMaterialDto echontillonMaterialSaved = iEchontillonMaterialService.add(echontillonMaterialDto);
@@ -33,6 +36,7 @@ public class EchontillonMaterialController {
     }
 
     @PutMapping("/{id}/update")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
     public ResponseEntity<EchontillonMaterialDto> update(@PathVariable Long id, @RequestBody @Valid EchontillonMaterialDto echontillonMaterialDto)
     {
         EchontillonMaterialDto echontillonMaterialUpdated = iEchontillonMaterialService.update(id, echontillonMaterialDto);
@@ -40,6 +44,7 @@ public class EchontillonMaterialController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<EchontillonMaterialDto> getById(@PathVariable Long id)
     {
         try{
@@ -51,6 +56,7 @@ public class EchontillonMaterialController {
     }
 
     @DeleteMapping("/{id}/delete")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
     public ResponseEntity<MessageError> delete(@PathVariable Long id)
     {
         MessageError messageError = new MessageError("Echontillon material deleted successfully.");
@@ -59,6 +65,7 @@ public class EchontillonMaterialController {
     }
 
     @GetMapping("/price-total")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<List<EchontillonMaterialDto>> getByPriceTotalBefore(@RequestParam(name = "price-total") double priceTotal)
     {
         try{
@@ -70,6 +77,7 @@ public class EchontillonMaterialController {
     }
 
     @GetMapping("/quantity")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<List<EchontillonMaterialDto>> getByQuantityBefore(@RequestParam int quantity)
     {
         try{

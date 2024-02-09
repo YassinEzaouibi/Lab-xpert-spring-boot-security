@@ -6,6 +6,7 @@ import com.example.labxpert.Service.IEchontillonService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,12 +22,14 @@ public class EchantillonController {
     private final IEchontillonService iEchontillonService;
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<List<EchontillonDto>> getALl()
     {
         return ResponseEntity.ok(iEchontillonService.getAll());
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
     public ResponseEntity<EchontillonDto> save(@RequestBody @Valid EchontillonDto echontillonDto)
     {
         EchontillonDto echontillonSaved = iEchontillonService.add(echontillonDto);
@@ -34,6 +37,7 @@ public class EchantillonController {
     }
 
     @PutMapping("/{id}/update")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
     public ResponseEntity<EchontillonDto> update(@PathVariable Long id, @RequestBody @Valid EchontillonDto echontillonDto)
     {
         EchontillonDto echontillonUpdated = iEchontillonService.update(id, echontillonDto);
@@ -41,6 +45,7 @@ public class EchantillonController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<EchontillonDto> getById(@PathVariable Long id)
     {
         try{
@@ -53,6 +58,7 @@ public class EchantillonController {
     }
 
     @DeleteMapping("/{id}/delete")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
     public ResponseEntity<MessageError> delete(@PathVariable Long id)
     {
         MessageError messageError = new MessageError("Echontillon deleted successfully.");
@@ -61,6 +67,7 @@ public class EchantillonController {
     }
 
     @GetMapping("/code-echontillon")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<EchontillonDto> getByCodeEchontillon(@RequestParam String codeEchontillon)
     {
         try{

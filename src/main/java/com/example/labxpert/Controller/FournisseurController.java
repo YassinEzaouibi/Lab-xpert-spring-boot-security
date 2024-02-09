@@ -6,6 +6,7 @@ import com.example.labxpert.Service.IFournisseurService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,12 +21,14 @@ public class FournisseurController {
     private final IFournisseurService iFournisseurService;
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<List<FournisseurDto>> getAll()
     {
         return ResponseEntity.ok(iFournisseurService.getAll());
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<FournisseurDto> save(@RequestBody @Valid FournisseurDto fournisseurDto)
     {
         FournisseurDto fournisseurSaved = iFournisseurService.add(fournisseurDto);
@@ -33,6 +36,7 @@ public class FournisseurController {
     }
 
     @PutMapping("/{id}/update")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<FournisseurDto> update(@PathVariable Long id, @RequestBody @Valid FournisseurDto fournisseurDto)
     {
         FournisseurDto fournisseurUpdated = iFournisseurService.update(id, fournisseurDto);
@@ -40,6 +44,7 @@ public class FournisseurController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<FournisseurDto> getById(@PathVariable Long id)
     {
         try{
@@ -51,6 +56,7 @@ public class FournisseurController {
     }
 
     @DeleteMapping("/{id}/delete")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<MessageError> delete(@PathVariable Long id)
     {
         MessageError messageError = new MessageError("Fournisseur deleted successfully.");
@@ -59,6 +65,7 @@ public class FournisseurController {
     }
 
     @GetMapping("/name")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<FournisseurDto> getByName(@RequestParam String name)
     {
         try{

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,12 +24,14 @@ public class MaterialController {
     private final IMaterialService iMaterialService;
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<List<MaterialDto>> getAll()
     {
         return ResponseEntity.ok(iMaterialService.getAll());
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('MANAGER')")
     public ResponseEntity<MaterialDto> save(@RequestBody @Valid MaterialDto materialDto)
     {
         MaterialDto materialSaved = iMaterialService.add(materialDto);
@@ -36,6 +39,7 @@ public class MaterialController {
     }
 
     @PutMapping("/{id}/update")
+    @PreAuthorize("hasAuthority('MANAGER')")
     public ResponseEntity<MaterialDto> update(@PathVariable Long id, @RequestBody @Valid MaterialDto materialDto)
     {
         MaterialDto materialUpdated = iMaterialService.update(id, materialDto);
@@ -43,6 +47,7 @@ public class MaterialController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<MaterialDto> getById(@PathVariable Long id)
     {
         try{
@@ -55,6 +60,7 @@ public class MaterialController {
     }
 
     @DeleteMapping("/{id}/delete")
+    @PreAuthorize("hasAuthority('MANAGER')")
     public ResponseEntity<MessageError> delete(@PathVariable Long id)
     {
         MessageError messageError = new MessageError("Material deleted successfully.");
@@ -63,6 +69,7 @@ public class MaterialController {
     }
 
     @GetMapping("/libelle")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<MaterialDto> getByLibelle(@RequestParam String libelle)
     {
         try{
@@ -74,6 +81,7 @@ public class MaterialController {
     }
 
     @GetMapping("/price")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<List<MaterialDto>> getByPriceBefore(@RequestParam double price)
     {
         try{
@@ -85,6 +93,7 @@ public class MaterialController {
     }
 
     @GetMapping("/available-quantity")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<List<MaterialDto>> getByAvailableQuantityBefore(@RequestParam int availableQuantity)
     {
         try{

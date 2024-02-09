@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,12 +24,14 @@ public class AnalyseController {
     private final IAnalyseService iAnalyseService;
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<List<AnalyseDto>> getAll()
     {
         return ResponseEntity.ok(iAnalyseService.getAll());
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
     public ResponseEntity<AnalyseDto> save(@RequestBody @Valid AnalyseDto analyseDto)
     {
         AnalyseDto analyseSaved = iAnalyseService.add(analyseDto);
@@ -36,6 +39,7 @@ public class AnalyseController {
     }
 
     @PutMapping("/{id}/update")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
     public ResponseEntity<AnalyseDto> update(@PathVariable Long id, @RequestBody @Valid AnalyseDto analyseDto)
     {
         AnalyseDto analyseUpdated = iAnalyseService.update(id, analyseDto);
@@ -43,6 +47,7 @@ public class AnalyseController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<AnalyseDto> getById(@PathVariable Long id)
     {
         try{
@@ -54,6 +59,7 @@ public class AnalyseController {
     }
 
     @DeleteMapping("/{id}/delete")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
     public ResponseEntity<MessageError> delete(@PathVariable Long id)
     {
         MessageError messageError = new MessageError("Analyse deleted successfully.");
@@ -62,6 +68,7 @@ public class AnalyseController {
     }
 
     @GetMapping("/type-analyse")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<AnalyseDto> getByTypeAnalyse(@RequestParam(name = "type-analyse") TypeAnalyse typeAnalyse)
     {
         try{
@@ -73,6 +80,7 @@ public class AnalyseController {
     }
 
     @GetMapping("/date")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<List<AnalyseDto>> getByDateBetween(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name = "date-start") LocalDate dateStart, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name = "date-end") LocalDate dateEnd)
     {
         try{
