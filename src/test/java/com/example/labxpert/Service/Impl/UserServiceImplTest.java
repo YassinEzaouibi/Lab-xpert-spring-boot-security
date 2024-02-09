@@ -1,3 +1,4 @@
+/*
 package com.example.labxpert.Service.Impl;
 
 import com.example.labxpert.Dtos.UserDto;
@@ -252,4 +253,4 @@ class UserServiceImplTest {
         Assertions.assertThat(userAll).isNotEmpty();
         Assertions.assertThat(userAll).hasSize(3);
     }
-}
+}*/

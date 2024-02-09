@@ -9,6 +9,7 @@ import com.example.labxpert.Service.IUserService;
 import io.micrometer.core.instrument.util.StringUtils;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,13 +24,18 @@ public class UserServiceImpl implements IUserService {
 
     private final IUserRepository iUserRepository;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Override
-    public UserDto add(UserDto userDto)
-    {
+    public UserDto add(UserDto userDto) {
+
+        String encodedPassword = passwordEncoder.encode(userDto.getPassword());
         validation(userDto);
         checkExistEmail(userDto);
-        User user = iUserRepository.save(modelMapper.map(userDto, User.class));
+        User userToSave = modelMapper.map(userDto, User.class);
+        userToSave.setPassword(encodedPassword);
+        User user = iUserRepository.save(userToSave);
         return modelMapper.map(user, UserDto.class);
     }
 
@@ -48,13 +54,22 @@ public class UserServiceImpl implements IUserService {
         userExist.setPrenom(userDto.getPrenom());
         userExist.setSexe(userDto.getSexe());
         userExist.setAddress(userDto.getAddress());
-        userExist.setPassword(userDto.getPassword());
+
+        String encodedPassword = passwordEncoder.encode(userDto.getPassword());
+        userExist.setPassword(encodedPassword);
         userExist.setDateNaissance(userDto.getDateNaissance());
         userExist.setVille(userDto.getVille());
         userExist.setTel(userDto.getTel());
 
         User userUpdated = iUserRepository.save(userExist);
         return modelMapper.map(userUpdated, UserDto.class);
+    }
+
+    @Override
+    public UserDto loadUserByEmail(String email) {
+        User user = iUserRepository.findByEmailAndDeletedFalse(email).orElseThrow(
+                ()-> new NotFoundException("User not found with this email : " + email));
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override

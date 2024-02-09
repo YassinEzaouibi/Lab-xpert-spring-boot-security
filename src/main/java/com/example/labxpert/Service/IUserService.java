@@ -18,4 +18,5 @@ public interface IUserService {
     void checkExistEmail(UserDto userDto);
     void SiNoEqualCheckEmailExist(User userExist, UserDto userDto);
     void validation(UserDto userDto);
+    UserDto loadUserByEmail(String email);
 }
