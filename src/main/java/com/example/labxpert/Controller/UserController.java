@@ -8,6 +8,7 @@ import com.example.labxpert.Service.IUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,12 +24,14 @@ public class UserController {
     private final IUserService iUserService;
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<List<UserDto>> getAll()
     {
         return ResponseEntity.ok(iUserService.getAll());
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<UserDto> save(@RequestBody @Valid UserDto userDto)
     {
         UserDto userSaved = iUserService.add(userDto);
@@ -36,6 +39,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}/update")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<UserDto> update(@PathVariable Long id, @RequestBody @Valid UserDto userDto)
     {
         UserDto userUpdated = iUserService.update(id, userDto);
@@ -43,6 +47,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<UserDto> getById(@PathVariable Long id)
     {
         try{
@@ -55,6 +60,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}/delete")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<MessageError> delete(@PathVariable Long id)
     {
         MessageError messageError = new MessageError("Material deleted successfully.");
@@ -63,6 +69,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<UserDto> getByName(@RequestParam String name)
     {
         try{

@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.labxpert.helper.JWTHelper;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,20 +29,28 @@ public class JWTAuthorisationFilter extends OncePerRequestFilter {
     private JWTHelper jwtHelper;
 
 
+
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-       String accessToken = jwtHelper.extractTokenFromHeaderIfExists(request.getHeader(AUTH_HEADER));
-        if (accessToken != null) {
+    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException
+    {
+        String accessToken = jwtHelper.extractTokenFromHeaderIfExists(request.getHeader(AUTH_HEADER));
+        if(accessToken != null)
+        {
             Algorithm algorithm = Algorithm.HMAC256(SECRET);
             JWTVerifier jwtVerifier = JWT.require(algorithm).build();
             DecodedJWT decodedJWT = jwtVerifier.verify(accessToken);
             String email = decodedJWT.getSubject();
-            String role = decodedJWT.getClaim("roles").asString();
-            GrantedAuthority authorities = new SimpleGrantedAuthority(role);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(authorities, email, null);
+            String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
+            Collection<GrantedAuthority> authorities = new ArrayList<>();
+
+            for (String role : roles)
+            {
+                authorities.add(new SimpleGrantedAuthority(role));
+            }
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(request, response);
-        } else {
+        }else {
             filterChain.doFilter(request, response);
         }
     }

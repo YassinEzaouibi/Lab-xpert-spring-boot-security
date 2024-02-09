@@ -7,6 +7,7 @@ import com.example.labxpert.Service.IPlanificationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,12 +22,14 @@ public class PlanificationController {
     private final IPlanificationService iPlanificationService;
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<List<PlanificationDto>> getAll()
     {
         return ResponseEntity.ok(iPlanificationService.getAll());
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyAuthority('MANAGER')")
     public ResponseEntity<PlanificationDto> save(@RequestBody @Valid PlanificationDto planificationDto)
     {
         PlanificationDto planificationSaved = iPlanificationService.add(planificationDto);
@@ -34,6 +37,7 @@ public class PlanificationController {
     }
 
     @PutMapping("/{id}/update")
+    @PreAuthorize("hasAnyAuthority('MANAGER')")
     public ResponseEntity<PlanificationDto> update(@PathVariable Long id, @RequestBody @Valid PlanificationDto planificationDto)
     {
         PlanificationDto planificationSaved = iPlanificationService.update(id, planificationDto);
@@ -41,6 +45,7 @@ public class PlanificationController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<PlanificationDto> getById(@PathVariable Long id)
     {
         try{
@@ -52,6 +57,7 @@ public class PlanificationController {
     }
 
     @DeleteMapping("/{id}/delete")
+    @PreAuthorize("hasAuthority('MANAGER')")
     public ResponseEntity<MessageError> delete(@PathVariable Long id)
     {
         MessageError messageError = new MessageError("Planification deleted successfully.");

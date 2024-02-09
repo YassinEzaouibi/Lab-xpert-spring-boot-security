@@ -1,4 +1,3 @@
-/*
 package com.example.labxpert.Service.Impl;
 
 import com.example.labxpert.Dtos.UserDto;
@@ -40,7 +39,7 @@ class UserServiceImplTest {
     {
         iUserRepository = Mockito.mock(IUserRepository.class);
         ModelMapper modelMapper = new ModelMapper();
-        userService = new UserServiceImpl(iUserRepository, modelMapper);
+        userService = new UserServiceImpl(iUserRepository, modelMapper, null);
     }
 
     @Test
@@ -57,7 +56,7 @@ class UserServiceImplTest {
         user.setDateNaissance(LocalDate.of(2001,8,19));
         user.setVille("casablanca");
         user.setDeleted(false);
-        user.setRole(Role.Technicien);
+        user.setRole(Role.TECHNICIAN);
         user.setEmail("marouane@gmail.com");
         user.setPassword("123456");
 
@@ -70,7 +69,7 @@ class UserServiceImplTest {
         userDto.setDateNaissance(LocalDate.of(2001,8,19));
         userDto.setVille("casablanca");
         userDto.setDeleted(false);
-        userDto.setRole(Role.Technicien);
+        userDto.setRole(Role.TECHNICIAN);
         userDto.setEmail("marouane@gmail.com");
         userDto.setPassword("123456");
 
@@ -97,7 +96,7 @@ class UserServiceImplTest {
         user.setDateNaissance(LocalDate.of(2001,8,19));
         user.setVille("casablanca");
         user.setDeleted(false);
-        user.setRole(Role.Technicien);
+        user.setRole(Role.TECHNICIAN);
         user.setEmail("marouane@gmail.com");
         user.setPassword("123456");
 
@@ -110,7 +109,7 @@ class UserServiceImplTest {
         userDto.setDateNaissance(LocalDate.of(2001,8,19));
         userDto.setVille("casablanca");
         userDto.setDeleted(false);
-        userDto.setRole(Role.Technicien);
+        userDto.setRole(Role.TECHNICIAN);
         userDto.setEmail("marouane@gmail.com");
         userDto.setPassword("123456");
 
@@ -135,7 +134,7 @@ class UserServiceImplTest {
         user.setDateNaissance(LocalDate.of(2001,8,19));
         user.setVille("casablanca");
         user.setDeleted(false);
-        user.setRole(Role.Technicien);
+        user.setRole(Role.TECHNICIAN);
         user.setEmail("marouane@gmail.com");
         user.setPassword("123456");
 
@@ -148,7 +147,7 @@ class UserServiceImplTest {
         userDto.setDateNaissance(LocalDate.of(2001,8,19));
         userDto.setVille("casablanca");
         userDto.setDeleted(false);
-        userDto.setRole(Role.Technicien);
+        userDto.setRole(Role.TECHNICIAN);
         userDto.setEmail("marouane@gmail.com");
         userDto.setPassword("123456");
 
@@ -177,7 +176,7 @@ class UserServiceImplTest {
         user.setDateNaissance(LocalDate.of(2001,8,19));
         user.setVille("casablanca");
         user.setDeleted(false);
-        user.setRole(Role.Technicien);
+        user.setRole(Role.TECHNICIAN);
         user.setEmail("marouane@gmail.com");
         user.setPassword("123456");
 
@@ -201,7 +200,7 @@ class UserServiceImplTest {
         user1.setDateNaissance(LocalDate.of(2001,8,19));
         user1.setVille("casablanca");
         user1.setDeleted(false);
-        user1.setRole(Role.Technicien);
+        user1.setRole(Role.TECHNICIAN);
         user1.setEmail("marouane@gmail.com");
         user1.setPassword("123456");
 
@@ -215,7 +214,7 @@ class UserServiceImplTest {
         user2.setDateNaissance(LocalDate.of(2001,8,19));
         user2.setVille("casablanca");
         user2.setDeleted(false);
-        user2.setRole(Role.Technicien);
+        user2.setRole(Role.TECHNICIAN);
         user2.setEmail("marouane@gmail.com");
         user2.setPassword("123456");
 
@@ -229,7 +228,7 @@ class UserServiceImplTest {
         user3.setDateNaissance(LocalDate.of(2001,8,19));
         user3.setVille("casablanca");
         user3.setDeleted(false);
-        user3.setRole(Role.Technicien);
+        user3.setRole(Role.TECHNICIAN);
         user3.setEmail("marouane@gmail.com");
         user3.setPassword("123456");
 
@@ -242,7 +241,7 @@ class UserServiceImplTest {
         userDto.setDateNaissance(LocalDate.of(2001,8,19));
         userDto.setVille("casablanca");
         userDto.setDeleted(false);
-        userDto.setRole(Role.Technicien);
+        userDto.setRole(Role.TECHNICIAN);
         userDto.setEmail("marouane@gmail.com");
         userDto.setPassword("123456");
 
@@ -253,4 +252,4 @@ class UserServiceImplTest {
         Assertions.assertThat(userAll).isNotEmpty();
         Assertions.assertThat(userAll).hasSize(3);
     }
-}*/
+}

@@ -5,8 +5,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.example.labxpert.config.security.JwtTokenUtil.*;
@@ -19,7 +19,7 @@ public class JWTHelper {
     Algorithm algorithm = Algorithm.HMAC256(SECRET);
 
     // the access token is given to the user for a limited period of time
-    public String generateAccessToken(String email, String roles) {
+    public String generateAccessToken(String email, List<String> roles) {
         return JWT.create()
                 .withSubject(email)
                 .withExpiresAt(new Date(System.currentTimeMillis() + JWT_ACCESS_TOKEN_EXPIRE))

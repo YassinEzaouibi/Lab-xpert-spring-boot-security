@@ -5,6 +5,7 @@ import com.example.labxpert.Service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,15 +26,12 @@ public class UserDetailsServiceImp implements UserDetailsService {
         UserDto user = userService.loadUserByEmail(email);
         if (user == null) throw new UsernameNotFoundException("User Not Found");
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
-        authorities.add(authority);
-        org.springframework.security.core.userdetails.User
-                userDetails = new org.springframework.security
-                    .core
-                    .userdetails
-                    .User(user.getEmail(), user.getPassword(), authorities);
 
-        return userDetails;
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
+
+        authorities.add(authority);
+
+        return new User(user.getEmail(), user.getPassword(), authorities);
     }
 
 }

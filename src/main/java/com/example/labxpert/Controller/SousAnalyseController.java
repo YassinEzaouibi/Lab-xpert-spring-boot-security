@@ -7,6 +7,7 @@ import com.example.labxpert.Service.ISousAnalyseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,12 +22,14 @@ public class SousAnalyseController {
     private final ISousAnalyseService iSousAnalyseService;
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<List<SousAnalyseDto>> getAll()
     {
         return ResponseEntity.ok(iSousAnalyseService.getAll());
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<SousAnalyseDto> save(@RequestBody @Valid SousAnalyseDto sousAnalyseDto)
     {
         SousAnalyseDto sousAnalyseSaved = iSousAnalyseService.add(sousAnalyseDto);

@@ -30,7 +30,7 @@ class IUserRepositoryTest {
         user.setDateNaissance(LocalDate.of(2001,8,19));
         user.setVille("casablanca");
         user.setDeleted(false);
-        user.setRole(Role.Technicien);
+        user.setRole(Role.TECHNICIAN);
         user.setEmail("marouane@gmail.com");
         user.setPassword("123456");
 
@@ -51,7 +51,7 @@ class IUserRepositoryTest {
         user.setDateNaissance(LocalDate.of(2001,8,19));
         user.setVille("casablanca");
         user.setDeleted(false);
-        user.setRole(Role.Technicien);
+        user.setRole(Role.TECHNICIAN);
         user.setEmail("marouane@gmail.com");
         user.setPassword("123456");
 
@@ -74,7 +74,7 @@ class IUserRepositoryTest {
         user.setDateNaissance(LocalDate.of(2001,8,19));
         user.setVille("casablanca");
         user.setDeleted(false);
-        user.setRole(Role.Technicien);
+        user.setRole(Role.TECHNICIAN);
         user.setEmail("marouane@gmail.com");
         user.setPassword("123456");
 
@@ -96,7 +96,7 @@ class IUserRepositoryTest {
         user1.setDateNaissance(LocalDate.of(2001,8,19));
         user1.setVille("casablanca");
         user1.setDeleted(false);
-        user1.setRole(Role.Technicien);
+        user1.setRole(Role.TECHNICIAN);
         user1.setEmail("marouane@gmail.com");
         user1.setPassword("123456");
 
@@ -109,7 +109,7 @@ class IUserRepositoryTest {
         user2.setDateNaissance(LocalDate.of(2001,8,19));
         user2.setVille("casablanca");
         user2.setDeleted(false);
-        user2.setRole(Role.Technicien);
+        user2.setRole(Role.TECHNICIAN);
         user2.setEmail("marou@gmail.com");
         user2.setPassword("123456");
 
@@ -122,7 +122,7 @@ class IUserRepositoryTest {
         user3.setDateNaissance(LocalDate.of(2001,8,19));
         user3.setVille("casablanca");
         user3.setDeleted(false);
-        user3.setRole(Role.Technicien);
+        user3.setRole(Role.TECHNICIAN);
         user3.setEmail("maroua@gmail.com");
         user3.setPassword("123456");
 
@@ -147,7 +147,7 @@ class IUserRepositoryTest {
         user.setDateNaissance(LocalDate.of(2001,8,19));
         user.setVille("casablanca");
         user.setDeleted(false);
-        user.setRole(Role.Technicien);
+        user.setRole(Role.TECHNICIAN);
         user.setEmail("marouane@gmail.com");
         user.setPassword("123456");
 
@@ -168,7 +168,7 @@ class IUserRepositoryTest {
         user.setDateNaissance(LocalDate.of(2001,8,19));
         user.setVille("casablanca");
         user.setDeleted(false);
-        user.setRole(Role.Technicien);
+        user.setRole(Role.TECHNICIAN);
         user.setEmail("marouane@gmail.com");
         user.setPassword("123456");
 

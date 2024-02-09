@@ -6,6 +6,7 @@ import com.example.labxpert.Service.IPatientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,13 +20,16 @@ public class PatientController {
 
     private final IPatientService iPatientService;
 
+
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<List<PatientDto>> getAll()
     {
         return ResponseEntity.ok(iPatientService.getAll());
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('MANAGER')")
     public ResponseEntity<PatientDto> save(@RequestBody @Valid PatientDto patientDto)
     {
         PatientDto patientSaved = iPatientService.add(patientDto);
@@ -33,6 +37,7 @@ public class PatientController {
     }
 
     @PutMapping("/{id}/update")
+    @PreAuthorize("hasAuthority('MANAGER')")
     public ResponseEntity<PatientDto> update(@RequestBody @Valid PatientDto patientDto, @PathVariable Long id)
     {
         PatientDto patientUpdated = iPatientService.update(id, patientDto);
@@ -40,6 +45,7 @@ public class PatientController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<PatientDto> getById(@PathVariable Long id)
     {
         try{
@@ -51,6 +57,7 @@ public class PatientController {
     }
 
     @GetMapping("/patient")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<List<PatientDto>> getByName(@RequestParam String name)
     {
         try{
@@ -62,6 +69,7 @@ public class PatientController {
     }
 
     @DeleteMapping("/{id}/delete")
+    @PreAuthorize("hasAuthority('MANAGER')")
     public ResponseEntity<MessageError> delete(@PathVariable Long id)
     {
         MessageError messageError = new MessageError("Patient deleted successfully.");

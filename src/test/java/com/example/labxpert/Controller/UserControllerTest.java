@@ -58,7 +58,7 @@ class UserControllerTest {
         user.setDateNaissance(LocalDate.of(2001,8,19));
         user.setVille("casablanca");
         user.setDeleted(false);
-        user.setRole(Role.Technicien);
+        user.setRole(Role.TECHNICIAN);
         user.setEmail("marouane@gmail.com");
         user.setPassword("123456");
 
@@ -73,7 +73,7 @@ class UserControllerTest {
         userDto.setDateNaissance(LocalDate.of(2001,8,19));
         userDto.setVille("casablanca");
         userDto.setDeleted(false);
-        userDto.setRole(Role.Technicien);
+        userDto.setRole(Role.TECHNICIAN);
         userDto.setEmail("marouane@gmail.com");
         userDto.setPassword("123456");
     }
