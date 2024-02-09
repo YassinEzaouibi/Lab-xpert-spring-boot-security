@@ -1,7 +1,7 @@
 package com.example.labxpert.config.security;
 
-import com.example.labxpert.Dtos.UserDto;
-import com.example.labxpert.Service.IUserService;
+import com.example.labxpert.dtos.UserDto;
+import com.example.labxpert.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
