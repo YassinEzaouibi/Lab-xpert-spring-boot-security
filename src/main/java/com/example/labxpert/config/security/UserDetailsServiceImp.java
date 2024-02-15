@@ -25,7 +25,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
             throws UsernameNotFoundException {
         UserDto user = userService.loadUserByEmail(email);
         if (user == null) throw new UsernameNotFoundException("User Not Found");
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        Collection<GrantedAuthority>     = new ArrayList<>();
 
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
 
