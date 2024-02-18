@@ -21,14 +21,14 @@ public class ReactifController {
     private final IReactifService iReactifService;
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'TECHNICIAN')")
     public ResponseEntity<List<ReactifDto>> getAll()
     {
         return ResponseEntity.ok(iReactifService.getAll());
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAnyAuthority('MANAGER', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<ReactifDto> save(@RequestBody @Valid ReactifDto reactifDto)
     {
         ReactifDto reactifSaved = iReactifService.add(reactifDto);
@@ -36,7 +36,7 @@ public class ReactifController {
     }
 
     @PutMapping("/{id}/update")
-    @PreAuthorize("hasAnyAuthority('MANAGER', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<ReactifDto> update(@RequestBody @Valid ReactifDto reactifDto, @PathVariable Long id)
     {
         ReactifDto reactifUpdated = iReactifService.update(id, reactifDto);
@@ -44,7 +44,7 @@ public class ReactifController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'TECHNICIAN')")
     public ResponseEntity<ReactifDto> getById(@PathVariable Long id)
     {
         try{
@@ -56,7 +56,7 @@ public class ReactifController {
     }
 
     @GetMapping("/reactif")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'TECHNICIAN')")
     public ResponseEntity<ReactifDto> getByName(@RequestParam String name)
     {
         try{
@@ -68,7 +68,7 @@ public class ReactifController {
     }
 
     @DeleteMapping("/{id}/delete")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<MessageError> delete(@PathVariable Long id)
     {
         MessageError messageError = new MessageError("Reactif deleted successfully.");
@@ -77,7 +77,7 @@ public class ReactifController {
     }
 
     @GetMapping("/quantity-stock")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'TECHNICIAN')")
     public ResponseEntity<List<ReactifDto>> getByQuantityStockBefore(@RequestParam(name = "quantity-stock") int quantityStock)
     {
         try{

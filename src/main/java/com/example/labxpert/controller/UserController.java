@@ -21,7 +21,7 @@ public class UserController {
     private final IUserService iUserService;
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<List<UserDto>> getAll()
     {
         return ResponseEntity.ok(iUserService.getAll());

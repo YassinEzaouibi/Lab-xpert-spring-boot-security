@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenUtil {
 
-    public static final long JWT_ACCESS_TOKEN_EXPIRE = 10 * 60 * 100;
+    public static final long JWT_ACCESS_TOKEN_EXPIRE = 10 * 60 * 1000;
 
-    public static final long JWT_REFRESH_TOKEN_EXPIRE = 120 * 60 * 60;
+    public static final long JWT_REFRESH_TOKEN_EXPIRE = 120 * 60 * 1000;
 
     public static final String ISSUER = "YassinBoot Security Application";
 

@@ -36,6 +36,7 @@ public class Analyse {
 
     private LocalDate dateDebut;
     private LocalDate dateFin;
+
     private String commantaires;
 
     @Enumerated(EnumType.STRING)

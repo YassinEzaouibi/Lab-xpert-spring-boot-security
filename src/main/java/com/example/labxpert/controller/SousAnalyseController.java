@@ -28,7 +28,7 @@ public class SousAnalyseController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
     public ResponseEntity<SousAnalyseDto> save(@RequestBody @Valid SousAnalyseDto sousAnalyseDto)
     {
         SousAnalyseDto sousAnalyseSaved = iSousAnalyseService.add(sousAnalyseDto);
@@ -36,6 +36,7 @@ public class SousAnalyseController {
     }
 
     @PutMapping("/{id}/update")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
     public ResponseEntity<SousAnalyseDto> update(@PathVariable Long id, @RequestBody @Valid SousAnalyseDto sousAnalyseDto)
     {
         SousAnalyseDto sousAnalyseUpdated = iSousAnalyseService.update(id, sousAnalyseDto);
@@ -43,6 +44,7 @@ public class SousAnalyseController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<SousAnalyseDto> getById(@PathVariable Long id)
     {
         try{
@@ -54,6 +56,7 @@ public class SousAnalyseController {
     }
 
     @DeleteMapping("/{id}/delete")
+    @PreAuthorize("hasAnyAuthority('MANAGER')")
     public ResponseEntity<MessageError> delete(@PathVariable Long id)
     {
         MessageError messageError = new MessageError("Sous analyse deleted successfully.");
@@ -62,6 +65,7 @@ public class SousAnalyseController {
     }
 
     @GetMapping("/title")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
     public ResponseEntity<SousAnalyseDto> getByTitle(@RequestParam String title)
     {
         try{

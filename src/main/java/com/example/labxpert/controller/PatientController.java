@@ -29,7 +29,7 @@ public class PatientController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAuthority('MANAGER')")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
     public ResponseEntity<PatientDto> save(@RequestBody @Valid PatientDto patientDto)
     {
         PatientDto patientSaved = iPatientService.add(patientDto);
@@ -37,7 +37,7 @@ public class PatientController {
     }
 
     @PutMapping("/{id}/update")
-    @PreAuthorize("hasAuthority('MANAGER')")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
     public ResponseEntity<PatientDto> update(@RequestBody @Valid PatientDto patientDto, @PathVariable Long id)
     {
         PatientDto patientUpdated = iPatientService.update(id, patientDto);
@@ -69,7 +69,7 @@ public class PatientController {
     }
 
     @DeleteMapping("/{id}/delete")
-    @PreAuthorize("hasAuthority('MANAGER')")
+    @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
     public ResponseEntity<MessageError> delete(@PathVariable Long id)
     {
         MessageError messageError = new MessageError("Patient deleted successfully.");

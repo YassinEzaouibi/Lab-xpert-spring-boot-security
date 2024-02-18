@@ -22,43 +22,38 @@ public class ResultatController {
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
-    public ResponseEntity<List<ResultDto>> getAll()
-    {
+    public ResponseEntity<List<ResultDto>> getAll() {
         return ResponseEntity.ok(iResultService.getAll());
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
-    public ResponseEntity<ResultDto> save(@RequestBody @Valid ResultDto resultDto)
-    {
+    public ResponseEntity<ResultDto> save(@RequestBody @Valid ResultDto resultDto) {
         ResultDto resultSaved = iResultService.add(resultDto);
         return new ResponseEntity<>(resultSaved, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}/update")
     @PreAuthorize("hasAnyAuthority('MANAGER', 'TECHNICIAN')")
-    public ResponseEntity<ResultDto> update(@PathVariable Long id, @RequestBody @Valid ResultDto resultDto)
-    {
+    public ResponseEntity<ResultDto> update(@PathVariable Long id, @RequestBody @Valid ResultDto resultDto) {
         ResultDto resultUpdated = iResultService.update(id, resultDto);
         return new ResponseEntity<>(resultUpdated, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'TECHNICIAN')")
-    public ResponseEntity<ResultDto> getById(@PathVariable Long id)
-    {
-        try{
+    public ResponseEntity<ResultDto> getById(@PathVariable Long id) {
+        try {
             ResultDto result = iResultService.getById(id);
             return new ResponseEntity<>(result, HttpStatus.OK);
-        }catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/{id}/delete")
     @PreAuthorize("hasAnyAuthority('MANAGER')")
-    public ResponseEntity<MessageError> delete(@PathVariable Long id)
-    {
+    public ResponseEntity<MessageError> delete(@PathVariable Long id) {
         MessageError messageError = new MessageError("Sous analyse deleted successfully.");
         iResultService.delete(id);
         return new ResponseEntity<>(messageError, HttpStatus.OK);
